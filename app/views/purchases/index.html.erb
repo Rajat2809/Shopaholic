@@ -1,0 +1,58 @@
+<div class="Header headBar" style="background:white; color:black;box-shadow: 0 10px 6px -6px #777;">
+<div class="row">
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-md-6">
+            <img src="Shopaholic.png" height="100" width="100">
+            </div>
+            <div class="col-md-6">
+            <h1 style="line-height:50px;"> Shopaholic</h1>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-4" class="headerLinks" style="margin:auto; padding:10px; line-height: 75px;">
+    <div class="btn-group dropdown">
+    
+  <button type="button" class="btn btn-secondary dropdown-toggle" style="background:white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  Welcome User: <%= current_user.email %> 	&#9776;
+  </button>
+  <div class="dropdown-menu">
+  <li><a href="/products?page=1" class="product"  id="product" >Products</a></li>
+  <li><a href="/carts" class="cart"  id="cart" >Shopping Cart</a></li>
+  <li><a href="#" class="logout" id="logoutUser" >Log out</a></li>
+  </div>
+</div>
+    </div>
+</div>
+</div>
+<br>
+
+<div class="container">
+<% if @purchases.present? %>
+  <div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>OrderID</th>
+        <th>OrderDate</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @purchases.each do |purchase|%>
+      <tr>
+        <td><%= purchase.id %></td>
+        <td><%= purchase.created_at.strftime("%m-%d-%Y") %></td>
+        <td>$ <%= purchase.total_price %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <% else %>
+  <h2>No ordes yet !</h2>
+  <% end %>
+</div>

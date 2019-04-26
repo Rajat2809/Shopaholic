@@ -1,0 +1,93 @@
+<div class="Header headBar" style="background:white; color:black;box-shadow: 0 10px 6px -6px #777;">
+<div class="row">
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-md-6">
+            <img src="Shopaholic.png" height="100" width="100">
+            </div>
+            <div class="col-md-6">
+            <h1 style="line-height:50px;"> Shopaholic</h1>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-4" class="headerLinks" style="margin:auto; padding:10px; line-height: 75px;">
+    <div class="btn-group dropdown">
+  <button type="button" class="btn btn-secondary dropdown-toggle" style="background:white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  Welcome User: <%= current_user.email %> 	&#9776;
+  </button>
+  
+  <div class="dropdown-menu">
+  <li><a href="/products?page=1" class="product"  id="product" >Products</a></li>
+  <li><a href="/purchases" class="yourOrder"  id="yourOrder" >Your orders</a></li>
+  <li><a href="#" class="logout"  id="logoutUser" >Log out</a></li>
+  </div>
+</div>
+    </div>
+</div>
+</div>
+<br>
+
+<div class="container">
+<% if @carts.present? %>
+  <div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Product ID</th>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @carts.each do |cart|%>
+      <tr>
+        <td><%= cart.id%></td>
+        <td><%= cart.product.name %></td>
+        <td><%= cart.quantity %></td>
+        <td>$ <%= cart.total_price %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  </div>
+  <div class="row">
+<button class="checkout btn btn-secondary" id="checkout"  data-cartids="<%= @carts.pluck(:id) %>" style="background:black; color:white;"> Checkout</button>
+<button class="checkout btn btn-secondary" id="checkoutPouUp" data-toggle="modal" data-target="#checkoutModal" class="btn btn-primary" style="display:none;"> Checkout</button>
+</div>
+  <% else %>
+  <h2>Your Cart is empty</h2>
+  <% end %>
+</div>
+
+
+<div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+        <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+          <a href="/carts">
+          <span aria-hidden="true">&times;</span>
+          </a>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="jumbotron" style="text-align:center;">
+              <h1 class="display-3">Thank You!</h1>
+              <p class="lead">Your order of total amount <strong>$<span id="purchaseAmount"></span></strong> has been sucessfully placed</p>
+              <hr>
+              <p>
+                Having trouble? Contact us
+              </p>
+              <p class="lead">
+                <a class="btn btn-primary btn-sm" id="btnContinueShopping" href="/products?page=1" role="button">Continue Shopping</a>
+              </p>
+            </div>
+            </div>
+            </div>
